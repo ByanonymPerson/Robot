@@ -6,10 +6,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
     [SerializeField] private int _speed = 10;
     private Rigidbody _rigidbody;
-    public  float jumpforce;
 
     private void Awake()
     {
@@ -25,11 +23,6 @@ public class Player : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 180, 0);
         else if (_rigidbody.velocity.x > .01)
             transform.eulerAngles = new Vector3(0, 0, 0);
-
-            if(Input.GetButtonDown("Jump"))
-            {
-               _rigidbody.velocity = new Vector3 (_rigidbody.velocity.x , jumpforce , _rigidbody.velocity.z);
-            }
 
     }
 }
