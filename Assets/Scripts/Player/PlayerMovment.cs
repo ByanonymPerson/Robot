@@ -4,65 +4,59 @@ using UnityEngine;
 
 public class PlayerMovment : MonoBehaviour
 {
-    [SerializeField] private float _speed = 10f;
-    private Rigidbody _rigidbody;
-    public bool IsGrounded;
-    public int BoostInpulse = 5000;
-    private float _dirX;
+    [SerializeField] private int speed = 10;
+    private Rigidbody rb;
+    public bool isGrounded;
 
 
     
     // Start is called before the first frame update
-    public void Start(){
-      _rigidbody = GetComponent<Rigidbody>();
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
     }
 
-   public void Update () {
+    void Update ()
+    {
         Jump();
-        Boost();
     }
 
     // Update is called once per frame
-    public void FixedUpdate() { 
-       Move();
+    void FixedUpdate()
+     { 
+       move();
      }
 
-     public void Move()  {
-         _rigidbody.velocity = new Vector3(Input.GetAxis("Horizontal") * _speed, _rigidbody.velocity.y, Input.GetAxis("Vertical") * _speed);//move
+     void move() 
+     {
+         rb.velocity = new Vector3(Input.GetAxis("Horizontal") * speed, rb.velocity.y, Input.GetAxis("Vertical") * speed);//move
 
         
-        if (_rigidbody.velocity.x < -.01)// flip
+        if (rb.velocity.x < -.01)// flip
             transform.eulerAngles = new Vector3(0, 180, 0);
-        else if (_rigidbody.velocity.x > .01)
+        else if (rb.velocity.x > .01)
             transform.eulerAngles = new Vector3(0, 0, 0);
-            
-        }
 
-     public void Jump(){
-        if (Input.GetButtonDown("Jump") && IsGrounded)//jump
+     }
+     
+     void Jump()
+   
+     {
+        if (Input.GetButtonDown("Jump") && isGrounded)//jump
             {
-               IsGrounded = false;
-                _rigidbody.AddForce(new Vector3(0 , 300 , 0));
-           }
+                isGrounded = false;
+                rb.AddForce(new Vector3(0 , 300 , 0));
+            }
+
     }
 
-     public void OnCollisionEnter() { //ground
+     void OnCollisionEnter()
+     
+    { //ground
 
-         IsGrounded = true;
-        }
-
-     public void Boost () {
-         if(Input.GetKey(KeyCode.LeftShift))
-        {
-            _speed = 15f;
-        }
-         else 
-        {
-            _speed = 10f;
-        }
-
-        _dirX = Input.GetAxis("Horizontal") * _speed;
-       }
+         isGrounded = true;
+        
+    }
 
     
 
